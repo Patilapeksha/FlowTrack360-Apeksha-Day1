@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Login</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial;
+}
+
+body{
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+background:linear-gradient(135deg,#0077e6,#001d4d);
+}
+
+
+.box{
+width:330px;
+padding:30px;
+border-radius:20px;
+background:rgba(255,255,255,0.18);
+backdrop-filter:blur(15px);
+box-shadow:0 10px 30px #0005;
+color:white;
+}
+
+
+h2{
+text-align:center;
+margin-bottom:20px;
+}
+
+
+input{
+width:100%;
+padding:12px;
+margin:8px 0;
+border:none;
+outline:none;
+border-radius:6px;
+}
+
+
+button{
+width:100%;
+padding:11px;
+margin-top:12px;
+border:none;
+border-radius:6px;
+cursor:pointer;
+}
+
+
+.btn{
+background:#003d73;
+color:white;
+}
+
+
+.bottom{
+text-align:center;
+margin-top:18px;
+}
+
+
+a{
+color:white;
+font-weight:bold;
+cursor:pointer;
+}
+
+
+.msg{
+text-align:center;
+margin-top:10px;
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div id="root"></div>
+
+
+<script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+
+
+<script>
+
+
+function App(){
+
+const [login,setLogin]=React.useState(true);
+
+const [name,setName]=React.useState("");
+const [email,setEmail]=React.useState("");
+const [pass,setPass]=React.useState("");
+const [confirm,setConfirm]=React.useState("");
+
+const [msg,setMsg]=React.useState("");
+
+
+
+function submit(){
+
+if(login){
+
+if(email=="" || pass=="")
+setMsg("Fill all fields");
+else
+setMsg("Login Successful ✔");
+
+}
+
+else{
+
+if(name=="" || email=="" || pass=="" || confirm=="")
+setMsg("Fill all fields");
+
+else if(pass!==confirm)
+setMsg("Password not match");
+
+else
+setMsg("Register Successful ✔");
+
+}
+
+}
+
+
+
+return React.createElement(
+"div",
+{className:"box"},
+
+
+React.createElement(
+"h2",
+null,
+login ? "Login" : "Register"
+),
+
+
+!login && React.createElement(
+"input",
+{
+placeholder:"Name",
+onChange:e=>setName(e.target.value)
+}
+),
+
+
+React.createElement(
+"input",
+{
+placeholder:"Email",
+onChange:e=>setEmail(e.target.value)
+}
+),
+
+
+React.createElement(
+"input",
+{
+type:"password",
+placeholder:"Password",
+onChange:e=>setPass(e.target.value)
+}
+),
+
+
+!login && React.createElement(
+"input",
+{
+type:"password",
+placeholder:"Confirm Password",
+onChange:e=>setConfirm(e.target.value)
+}
+),
+
+
+React.createElement(
+"button",
+{
+className:"btn",
+onClick:submit
+},
+login ? "Sign in" : "Register"
+),
+
+
+
+React.createElement(
+"div",
+{className:"msg"},
+msg
+),
+
+
+
+React.createElement(
+"div",
+{className:"bottom"},
+
+login ?
+
+React.createElement(
+"span",
+null,
+"Don't have an account? ",
+React.createElement(
+"a",
+{
+onClick:()=>{
+setLogin(false);
+setMsg("");
+}
+},
+"Register"
+)
+)
+
+:
+
+React.createElement(
+"span",
+null,
+"Already have an account? ",
+React.createElement(
+"a",
+{
+onClick:()=>{
+setLogin(true);
+setMsg("");
+}
+},
+"Login"
+)
+)
+
+)
+
+);
+
+}
+
+
+ReactDOM.createRoot(
+document.getElementById("root")
+).render(
+React.createElement(App)
+);
+
+
+</script>
+
+</body>
+</html>
